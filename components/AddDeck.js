@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, white } from '../utils/colors';
+import { gray, purple, white } from '../utils/colors';
 import TextButton from './TextButton';
+import { addDeck } from '../actions';
 
 class AddDeck extends Component {
+  state = {
+    title: '',
+  };
+
+  handleOnChange = (title) => {
+    this.setState({
+      title,
+    });
+  };
+
+  submit = () => {
+    const { title } = this.state;
+    const { navigation } = this.props;
+
+    if (title !== '') {
+      const { dispatch } = this.props;
+      dispatch(addDeck(title));
+      return navigation.goBack();
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -13,9 +34,15 @@ class AddDeck extends Component {
           <Text style={styles.title}>What is the title of your new deck?</Text>
         </View>
         <View style={styles.block}>
-          <TextInput style={styles.input} />
+          <TextInput
+            style={styles.input}
+            placeholder='Title'
+            placeholderTextColor={purple}
+            onChangeText={this.handleOnChange}
+            value={this.state.title}
+          />
         </View>
-        <TextButton>Submit</TextButton>
+        <TextButton onPress={this.submit}>Submit</TextButton>
       </View>
     );
   }
@@ -51,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDeck;
+export default connect()(AddDeck);
