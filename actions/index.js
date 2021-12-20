@@ -1,4 +1,4 @@
-import { getDecks, saveDeckTitle } from '../utils/api';
+import { getDecks, saveDeckTitle, addCardToDeck } from '../utils/api';
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS';
 export const ADD_DECK = 'ADD_DECK';
@@ -20,6 +20,7 @@ export function addDeck(title) {
 }
 
 export function addCard(title, card) {
+  addCardToDeck(title, card);
   return {
     type: ADD_CARD,
     title,

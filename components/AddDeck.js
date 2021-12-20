@@ -27,6 +27,8 @@ class AddDeck extends Component {
     }
   };
   render() {
+    const { title } = this.state;
+    const disabled = title === '';
     return (
       <View style={styles.container}>
         <View style={{ height: 60 }} />
@@ -39,10 +41,12 @@ class AddDeck extends Component {
             placeholder='Title'
             placeholderTextColor={purple}
             onChangeText={this.handleOnChange}
-            value={this.state.title}
+            value={title}
           />
         </View>
-        <TextButton onPress={this.submit}>Submit</TextButton>
+        <TextButton disabled={disabled} onPress={this.submit}>
+          Submit
+        </TextButton>
       </View>
     );
   }
