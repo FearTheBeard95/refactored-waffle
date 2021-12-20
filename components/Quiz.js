@@ -1,67 +1,85 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { gray, white } from '../utils/colors';
 import TextButton from './TextButton';
+import ViewPage from '@react-native-community/viewpager';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 class Quiz extends Component {
+  state = {
+    screen: 'question',
+    correct: 0,
+    incorrect: 0,
+    questionCount: this.props.questions.length,
+    answered: Array(this.props.questions.length).fill(0),
+  };
+  handlePageChange = (evt) => {
+    this.setState({
+      screen: 'question',
+    });
+  };
+  showQuestionScreen = () =>
+    this.setState({
+      screen: 'question',
+    });
+  showAnswerScreen = () =>
+    this.setState({
+      screen: 'answer',
+    });
+  showResultScreen = () =>
+    this.setState({
+      screen: 'result',
+    });
   render() {
-    return <QuizInfo question='Can react be used on iOS' />;
+    const { questions } = this.props;
+    const { screen } = this.state;
+    return (
+      <ViewPage
+        style={styles.container}
+        scrollEnabled={true}
+        onPageSelected={this.handlePageChange}
+        ref={(viewPager) => {
+          this.viewPager = viewPager;
+        }}
+      >
+        {questions.map((question, index) => {
+          return screen === 'question' ? (
+            <View style={styles.pageStyle} key={index}>
+              <View style={[styles.block, styles.questionContainer]}>
+                <Text style={styles.title}>Question</Text>
+                <View style={styles.questionWrapper}>
+                  <Text style={styles.questionText}>{question.question}</Text>
+                </View>
+                <TextButton onPress={this.showAnswerScreen}>Answer</TextButton>
+              </View>
+              <View>
+                <TextButton>Correct</TextButton>
+                <TextButton>Incorrect</TextButton>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.pageStyle} key={index}>
+              <View style={[styles.block, styles.questionContainer]}>
+                <Text style={styles.title}>Answer</Text>
+                <View style={styles.questionWrapper}>
+                  <Text style={styles.questionText}>{question.answer}</Text>
+                </View>
+                <TextButton onPress={this.showQuestionScreen}>
+                  Question
+                </TextButton>
+              </View>
+              <View>
+                <TextButton>Correct</TextButton>
+                <TextButton>Incorrect</TextButton>
+              </View>
+            </View>
+          );
+        })}
+      </ViewPage>
+    );
   }
 }
-
-const QuizInfo = (props) => {
-  const { question, answer } = props;
-
-  if (question != null) {
-    return (
-      <View style={styles.pageStyle} key={1}>
-        <View style={[styles.block, styles.questionContainer]}>
-          <Text style={styles.title}>Question</Text>
-          <View style={styles.questionWrapper}>
-            <Text style={styles.questionText}>{question}</Text>
-          </View>
-          <TextButton>Question</TextButton>
-        </View>
-        <View>
-          <TextButton>Correct</TextButton>
-          <TextButton>Incorrect</TextButton>
-        </View>
-      </View>
-    );
-  }
-
-  if (answer != null) {
-    return (
-      <View style={styles.pageStyle} key={1}>
-        <View style={[styles.block, styles.questionContainer]}>
-          <Text style={styles.title}>Answer</Text>
-          <View style={styles.questionWrapper}>
-            <Text style={styles.questionText}>Yes</Text>
-          </View>
-          <TextButton>Answer</TextButton>
-        </View>
-        <View>
-          <TextButton>Correct</TextButton>
-          <TextButton>Incorrect</TextButton>
-        </View>
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.pageStyle}>
-      <View style={styles.block}>
-        <Text style={[styles.count, { textAlign: 'center' }]}>
-          You cannot take a quiz because there are no cards in the deck.
-        </Text>
-        <Text style={[styles.count, { textAlign: 'center' }]}>
-          Please add some cards and try again.
-        </Text>
-      </View>
-    </View>
-  );
-};
 
 const Results = (props) => {
   return (
@@ -148,4 +166,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Quiz;
+function mapStateToProps(state, { route }) {
+  return {
+    questions: state[route.params.id].questions,
+  };
+}
+
+export default connect(mapStateToProps)(Quiz);
