@@ -1,13 +1,13 @@
-// Learn more about createBottomTabNavigator:
-// https://reactnavigation.org/docs/bottom-tab-navigator
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useColorScheme } from "react-native";
-
-import Colors from "../constants/Colors";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Platform, useColorScheme } from 'react-native';
+import Colors from '../constants/Colors';
+import TabOneScreen from '../screens/DeckListScreen';
+import TabTwoScreen from '../screens/AddDeckScreen';
+import Deck from '../components/Deck';
+import Quiz from '../components/Quiz';
+import AddCard from '../components/AddCard';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -16,24 +16,33 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}
+      initialRouteName='TabOne'
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false,
+      }}
     >
       <BottomTab.Screen
-        name="TabOne"
+        name='Deck list'
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon
+              name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'}
+              color={color}
+            />
           ),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name='Add deck'
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon
+              name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
+              color={color}
+            />
           ),
         }}
       />
@@ -55,9 +64,24 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="TabOneScreen"
+        name='DeckListScreen'
         component={TabOneScreen}
-        options={{ headerTitle: "Tab One Title" }}
+        options={{ headerTitle: 'Deck List' }}
+      />
+      <TabOneStack.Screen
+        name='Deck'
+        component={Deck}
+        options={{ headerTitle: 'Deck' }}
+      />
+      <TabOneStack.Screen
+        name='Quiz'
+        component={Quiz}
+        options={{ headerTitle: 'Quiz' }}
+      />
+      <TabOneStack.Screen
+        name='AddCard'
+        component={AddCard}
+        options={{ headerTitle: 'Add Card' }}
       />
     </TabOneStack.Navigator>
   );
@@ -69,9 +93,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
+        name='AddDeck'
         component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
+        options={{ headerTitle: 'Add Deck' }}
       />
     </TabTwoStack.Navigator>
   );
