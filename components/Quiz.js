@@ -31,10 +31,58 @@ class Quiz extends Component {
     this.setState({
       screen: 'result',
     });
+  handleAnswer = (answer, page) => {
+    answer === 'correct'
+      ? this.setState((prevState) => ({
+          correct: prevState.correct + 1,
+        }))
+      : this.setState((prevState) => ({
+          incorrect: prevState.incorrect + 1,
+        }));
+    this.setState(
+      (prevState) => ({
+        answered: prevState.answered.map((p, i) => {
+          if (page === i) {
+            return 1;
+          }
+        }),
+      }),
+      () => {
+        const { correct, incorrect, questionCount } = this.state;
+
+        if (questionCount === correct + incorrect) {
+          this.setState({
+            screen: 'results',
+          });
+        } else {
+          this.viewPager.setPage(page + 1);
+          this.setState({
+            screen: 'question',
+          });
+        }
+      }
+    );
+  };
+
+  handleReset = () =>
+    this.setState({
+      screen: 'question',
+      correct: 0,
+      incorrect: 0,
+      answered: Array(this.props.questions.length).fill(0),
+    });
+
   render() {
-    const { questions } = this.props;
-    const { screen } = this.state;
-    return (
+    const { questions, navigation } = this.props;
+    const { screen, correct } = this.state;
+    const result = ((correct / questions.length) * 100).toFixed(0);
+    return screen === 'results' ? (
+      <Results
+        navigation={navigation}
+        reset={this.handleReset}
+        result={result}
+      />
+    ) : (
       <ViewPage
         style={styles.container}
         scrollEnabled={true}
@@ -54,8 +102,18 @@ class Quiz extends Component {
                 <TextButton onPress={this.showAnswerScreen}>Answer</TextButton>
               </View>
               <View>
-                <TextButton>Correct</TextButton>
-                <TextButton>Incorrect</TextButton>
+                <TextButton
+                  onPress={() => this.handleAnswer('correct', index)}
+                  disabled={this.state.answered[index] === 1}
+                >
+                  Correct
+                </TextButton>
+                <TextButton
+                  onPress={() => this.handleAnswer('incorrect', index)}
+                  disabled={this.state.answered[index] === 1}
+                >
+                  Incorrect
+                </TextButton>
               </View>
             </View>
           ) : (
@@ -70,8 +128,18 @@ class Quiz extends Component {
                 </TextButton>
               </View>
               <View>
-                <TextButton>Correct</TextButton>
-                <TextButton>Incorrect</TextButton>
+                <TextButton
+                  onPress={() => this.handleAnswer('correct', index)}
+                  disabled={this.state.answered[index] === 1}
+                >
+                  Correct
+                </TextButton>
+                <TextButton
+                  onPress={() => this.handleAnswer('incorrect', index)}
+                  disabled={this.state.answered[index] === 1}
+                >
+                  Incorrect
+                </TextButton>
               </View>
             </View>
           );
@@ -87,14 +155,16 @@ const Results = (props) => {
       <View style={[styles.block, styles.questionContainer]}>
         <Text style={styles.title}>Results</Text>
         <View style={styles.questionWrapper}>
-          <Text style={styles.ResultTextLarge}>Quiz Done</Text>
+          <Text style={styles.ResultTextLarge}>Quiz Complete</Text>
           <Text style={styles.ResultTextSmall}>Here's how you did</Text>
-          <Text style={styles.ResultTextXLarge}>100%</Text>
+          <Text style={styles.ResultTextXLarge}>{props.result}%</Text>
         </View>
       </View>
       <View>
-        <TextButton>Restart Quiz</TextButton>
-        <TextButton>Back to Deck</TextButton>
+        <TextButton onPress={props.reset}>Restart Quiz</TextButton>
+        <TextButton onPress={() => props.navigation.goBack()}>
+          Back to Deck
+        </TextButton>
       </View>
     </View>
   );
@@ -153,16 +223,6 @@ const styles = StyleSheet.create({
   ResultTextSmall: {
     textAlign: 'center',
     fontSize: 30,
-  },
-  resultTextGood: {
-    color: gray,
-    fontSize: 46,
-    textAlign: 'center',
-  },
-  resultTextBad: {
-    color: gray,
-    fontSize: 46,
-    textAlign: 'center',
   },
 });
 
