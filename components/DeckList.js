@@ -11,10 +11,12 @@ import { handleReceiveDecks } from '../actions';
 import { gray, purple, white } from '../utils/colors';
 import Deck from './Deck';
 import DeckInfo from './DeckInfo';
+import { setLocalNotification } from '../utils/helpers';
 
 class DeckList extends Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
+    setLocalNotification();
   }
   render() {
     const { decks } = this.props;

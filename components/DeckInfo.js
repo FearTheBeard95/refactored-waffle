@@ -6,6 +6,9 @@ import { gray, purple, white } from '../utils/colors';
 class DeckInfo extends Component {
   render() {
     const { deck } = this.props;
+    if (deck === undefined) {
+      return <View style={styles.deckContainer} />;
+    }
     return (
       <View style={styles.deckContainer}>
         <View>

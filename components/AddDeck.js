@@ -45,7 +45,7 @@ class AddDeck extends Component {
           />
         </View>
         <TextButton disabled={disabled} onPress={this.submit}>
-          Submit
+          Create Deck
         </TextButton>
       </View>
     );

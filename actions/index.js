@@ -3,6 +3,7 @@ import { getDecks, saveDeckTitle, addCardToDeck } from '../utils/api';
 export const RECEIVE_DECKS = 'RECEIVE_DECKS';
 export const ADD_DECK = 'ADD_DECK';
 export const ADD_CARD = 'ADD_CARD';
+export const REMOVE_DECK = 'REMOVE_DECK';
 
 function receiveDecks(decks) {
   return {
@@ -25,6 +26,13 @@ export function addCard(title, card) {
     type: ADD_CARD,
     title,
     card,
+  };
+}
+
+export function deleteDeck(id) {
+  return {
+    type: REMOVE_DECK,
+    id,
   };
 }
 

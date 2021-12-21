@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { gray, white } from '../utils/colors';
 import TextButton from './TextButton';
 import ViewPage from '@react-native-community/viewpager';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 class Quiz extends Component {
+  componentDidMount() {
+    clearLocalNotification().then(setLocalNotification);
+  }
   state = {
     screen: 'question',
     correct: 0,
@@ -95,6 +98,9 @@ class Quiz extends Component {
           return screen === 'question' ? (
             <View style={styles.pageStyle} key={index}>
               <View style={[styles.block, styles.questionContainer]}>
+                <Text style={styles.count}>
+                  {index + 1} / {questions.length}
+                </Text>
                 <Text style={styles.title}>Question</Text>
                 <View style={styles.questionWrapper}>
                   <Text style={styles.questionText}>{question.question}</Text>
@@ -119,6 +125,9 @@ class Quiz extends Component {
           ) : (
             <View style={styles.pageStyle} key={index}>
               <View style={[styles.block, styles.questionContainer]}>
+                <Text style={styles.count}>
+                  {index + 1} / {questions.length}
+                </Text>
                 <Text style={styles.title}>Answer</Text>
                 <View style={styles.questionWrapper}>
                   <Text style={styles.questionText}>{question.answer}</Text>
