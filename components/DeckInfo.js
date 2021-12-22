@@ -16,7 +16,7 @@ class DeckInfo extends Component {
   };
   static propTypes = {
     deck: PropTypes.object,
-    navigation: PropTypes.object.isRequired,
+    navigation: PropTypes.object,
   };
   handleDeckClick = (id) => {
     const { bounceValue } = this.state;
