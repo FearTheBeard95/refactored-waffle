@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, lighBlue, lightPurp, purple, white } from '../utils/colors';
+import PropTypes from 'prop-types';
+import { gray, lightPurp, white } from '../utils/colors';
 import TextButton from './TextButton';
 import { addDeck } from '../actions';
 
@@ -16,12 +17,16 @@ class AddDeck extends Component {
     });
   };
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
+  };
+
   submit = () => {
     const { title } = this.state;
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
 
     if (title !== '') {
-      const { dispatch } = this.props;
       dispatch(addDeck(title));
       return navigation.goBack();
     }

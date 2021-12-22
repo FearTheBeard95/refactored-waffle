@@ -7,6 +7,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleReceiveDecks } from '../actions';
 import { gray, lightPurp, purple, white } from '../utils/colors';
@@ -15,6 +16,11 @@ import DeckInfo from './DeckInfo';
 import { setLocalNotification } from '../utils/helpers';
 
 class DeckList extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    decks: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
+  };
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
     setLocalNotification();

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, lightPurp, purple, white } from '../utils/colors';
+import PropTypes from 'prop-types';
+import { gray, lightPurp, white } from '../utils/colors';
 import TextButton from './TextButton';
 import { addCard } from '../actions';
 
@@ -9,6 +10,12 @@ class AddCard extends Component {
   state = {
     question: '',
     answer: '',
+  };
+
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    route: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
   };
 
   onChangeQuestion = (question) =>

@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { gray, purple, red, white } from '../utils/colors';
+import { purple, red, white } from '../utils/colors';
 import DeckInfo from './DeckInfo';
 import TextButton from './TextButton';
 import { deleteDeck } from '../actions';
 import { removeDeck } from '../utils/api';
 
 class Deck extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    navigation: PropTypes.object,
+  };
   shouldComponentUpdate(nextProps) {
     return nextProps.id !== undefined;
   }
@@ -25,14 +25,15 @@ class Deck extends Component {
     navigation.goBack();
   };
   render() {
+    const { id, navigation } = this.props;
     return (
       <View style={styles.container}>
-        <DeckInfo id={this.props.id} />
+        <DeckInfo id={id} />
         <View>
           <TextButton
             onPress={() =>
-              this.props.navigation.navigate('AddCard', {
-                id: this.props.id,
+              navigation.navigate('AddCard', {
+                id,
               })
             }
           >
@@ -40,8 +41,8 @@ class Deck extends Component {
           </TextButton>
           <TextButton
             onPress={() =>
-              this.props.navigation.navigate('Quiz', {
-                id: this.props.id,
+              navigation.navigate('Quiz', {
+                id,
               })
             }
           >

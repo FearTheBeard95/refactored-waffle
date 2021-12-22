@@ -6,22 +6,21 @@ import {
   Animated,
   TouchableOpacity,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  gray,
-  green,
-  lighBlue,
-  lightPurp,
-  purple,
-  white,
-} from '../utils/colors';
+import { lighBlue, lightPurp, white } from '../utils/colors';
 
 class DeckInfo extends Component {
   state = {
     bounceValue: new Animated.Value(1),
   };
+  static propTypes = {
+    deck: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
+  };
   handleDeckClick = (id) => {
     const { bounceValue } = this.state;
+    const { navigation } = this.props;
     Animated.sequence([
       Animated.timing(bounceValue, {
         duration: 100,
@@ -34,7 +33,7 @@ class DeckInfo extends Component {
         useNativeDriver: true,
       }),
     ]).start(() =>
-      this.props.navigation.navigate('Deck', {
+      navigation.navigate('Deck', {
         id,
       })
     );

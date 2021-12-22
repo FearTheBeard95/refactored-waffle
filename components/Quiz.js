@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, lighBlue, lightPurp, white } from '../utils/colors';
+import PropTypes from 'prop-types';
+import { lighBlue, lightPurp, white } from '../utils/colors';
 import TextButton from './TextButton';
 import ViewPage from '@react-native-community/viewpager';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 class Quiz extends Component {
+  static propTypes = {
+    questions: PropTypes.array.isRequired,
+    navigation: PropTypes.object.isRequired,
+  };
   componentDidMount() {
     clearLocalNotification().then(setLocalNotification);
   }
@@ -189,7 +194,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 16,
-    backgroundColor: gray,
+    backgroundColor: white,
     justifyContent: 'space-around',
   },
   block: {
@@ -197,6 +202,7 @@ const styles = StyleSheet.create({
   },
   count: {
     fontSize: 24,
+    color: lightPurp,
   },
   title: {
     fontSize: 32,
