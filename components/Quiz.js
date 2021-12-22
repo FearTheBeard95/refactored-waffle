@@ -107,7 +107,7 @@ class Quiz extends Component {
         />
       );
     }
-    if (screen === 'question') {
+    if (screen === 'question' || screen === 'answer') {
       return (
         <ViewPage
           style={styles.container}
@@ -129,7 +129,7 @@ class Quiz extends Component {
                     <Text style={styles.questionText}>{question.question}</Text>
                   </View>
                   <TextButton onPress={this.showAnswerScreen}>
-                    Answer
+                    Show Answer
                   </TextButton>
                 </View>
                 <View>
@@ -158,7 +158,7 @@ class Quiz extends Component {
                     <Text style={styles.questionText}>{question.answer}</Text>
                   </View>
                   <TextButton onPress={this.showQuestionScreen}>
-                    Question
+                    Show Question
                   </TextButton>
                 </View>
                 <View>
