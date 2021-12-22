@@ -28,6 +28,9 @@ class AddDeck extends Component {
 
     if (title !== '') {
       dispatch(addDeck(title));
+      this.setState({
+        title: '',
+      });
       return navigation.goBack();
     }
   };

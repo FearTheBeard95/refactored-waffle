@@ -84,82 +84,103 @@ class Quiz extends Component {
     const { questions, navigation } = this.props;
     const { screen, correct } = this.state;
     const result = ((correct / questions.length) * 100).toFixed(0);
-    return screen === 'results' ? (
-      <Results
-        navigation={navigation}
-        reset={this.handleReset}
-        result={result}
-      />
-    ) : (
-      <ViewPage
-        style={styles.container}
-        scrollEnabled={true}
-        onPageSelected={this.handlePageChange}
-        ref={(viewPager) => {
-          this.viewPager = viewPager;
-        }}
-      >
-        {questions.map((question, index) => {
-          return screen === 'question' ? (
-            <View style={styles.pageStyle} key={index}>
-              <View style={[styles.block, styles.questionContainer]}>
-                <Text style={styles.count}>
-                  {index + 1} / {questions.length}
-                </Text>
-                <Text style={styles.title}>Question</Text>
-                <View style={styles.questionWrapper}>
-                  <Text style={styles.questionText}>{question.question}</Text>
+    if (questions.length === 0) {
+      return (
+        <View style={styles.pageStyle}>
+          <View style={styles.block}>
+            <Text style={[styles.count, { textAlign: 'center' }]}>
+              You cannot take a quiz because there are no cards in the deck.
+            </Text>
+            <Text style={[styles.count, { textAlign: 'center' }]}>
+              Please add some cards and try again.
+            </Text>
+          </View>
+        </View>
+      );
+    }
+    if (screen === 'results') {
+      return (
+        <Results
+          navigation={navigation}
+          reset={this.handleReset}
+          result={result}
+        />
+      );
+    }
+    if (screen === 'question') {
+      return (
+        <ViewPage
+          style={styles.container}
+          scrollEnabled={true}
+          onPageSelected={this.handlePageChange}
+          ref={(viewPager) => {
+            this.viewPager = viewPager;
+          }}
+        >
+          {questions.map((question, index) => {
+            return screen === 'question' ? (
+              <View style={styles.pageStyle} key={index}>
+                <View style={[styles.block, styles.questionContainer]}>
+                  <Text style={styles.count}>
+                    {index + 1} / {questions.length}
+                  </Text>
+                  <Text style={styles.title}>Question</Text>
+                  <View style={styles.questionWrapper}>
+                    <Text style={styles.questionText}>{question.question}</Text>
+                  </View>
+                  <TextButton onPress={this.showAnswerScreen}>
+                    Answer
+                  </TextButton>
                 </View>
-                <TextButton onPress={this.showAnswerScreen}>Answer</TextButton>
-              </View>
-              <View>
-                <TextButton
-                  onPress={() => this.handleAnswer('correct', index)}
-                  disabled={this.state.answered[index] === 1}
-                >
-                  Correct
-                </TextButton>
-                <TextButton
-                  onPress={() => this.handleAnswer('incorrect', index)}
-                  disabled={this.state.answered[index] === 1}
-                >
-                  Incorrect
-                </TextButton>
-              </View>
-            </View>
-          ) : (
-            <View style={styles.pageStyle} key={index}>
-              <View style={[styles.block, styles.questionContainer]}>
-                <Text style={styles.count}>
-                  {index + 1} / {questions.length}
-                </Text>
-                <Text style={styles.title}>Answer</Text>
-                <View style={styles.questionWrapper}>
-                  <Text style={styles.questionText}>{question.answer}</Text>
+                <View>
+                  <TextButton
+                    onPress={() => this.handleAnswer('correct', index)}
+                    disabled={this.state.answered[index] === 1}
+                  >
+                    Correct
+                  </TextButton>
+                  <TextButton
+                    onPress={() => this.handleAnswer('incorrect', index)}
+                    disabled={this.state.answered[index] === 1}
+                  >
+                    Incorrect
+                  </TextButton>
                 </View>
-                <TextButton onPress={this.showQuestionScreen}>
-                  Question
-                </TextButton>
               </View>
-              <View>
-                <TextButton
-                  onPress={() => this.handleAnswer('correct', index)}
-                  disabled={this.state.answered[index] === 1}
-                >
-                  Correct
-                </TextButton>
-                <TextButton
-                  onPress={() => this.handleAnswer('incorrect', index)}
-                  disabled={this.state.answered[index] === 1}
-                >
-                  Incorrect
-                </TextButton>
+            ) : (
+              <View style={styles.pageStyle} key={index}>
+                <View style={[styles.block, styles.questionContainer]}>
+                  <Text style={styles.count}>
+                    {index + 1} / {questions.length}
+                  </Text>
+                  <Text style={styles.title}>Answer</Text>
+                  <View style={styles.questionWrapper}>
+                    <Text style={styles.questionText}>{question.answer}</Text>
+                  </View>
+                  <TextButton onPress={this.showQuestionScreen}>
+                    Question
+                  </TextButton>
+                </View>
+                <View>
+                  <TextButton
+                    onPress={() => this.handleAnswer('correct', index)}
+                    disabled={this.state.answered[index] === 1}
+                  >
+                    Correct
+                  </TextButton>
+                  <TextButton
+                    onPress={() => this.handleAnswer('incorrect', index)}
+                    disabled={this.state.answered[index] === 1}
+                  >
+                    Incorrect
+                  </TextButton>
+                </View>
               </View>
-            </View>
-          );
-        })}
-      </ViewPage>
-    );
+            );
+          })}
+        </ViewPage>
+      );
+    }
   }
 }
 

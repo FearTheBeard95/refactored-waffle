@@ -15,7 +15,7 @@ class DeckInfo extends Component {
     bounceValue: new Animated.Value(1),
   };
   static propTypes = {
-    deck: PropTypes.object.isRequired,
+    deck: PropTypes.object,
     navigation: PropTypes.object.isRequired,
   };
   handleDeckClick = (id) => {
