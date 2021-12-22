@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { handleReceiveDecks } from '../actions';
-import { gray, purple, white } from '../utils/colors';
+import { gray, lightPurp, purple, white } from '../utils/colors';
 import Deck from './Deck';
 import DeckInfo from './DeckInfo';
 import { setLocalNotification } from '../utils/helpers';
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     marginBottom: 16,
-    color: purple,
+    color: lightPurp,
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,

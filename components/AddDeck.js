@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, purple, white } from '../utils/colors';
+import { gray, lighBlue, lightPurp, purple, white } from '../utils/colors';
 import TextButton from './TextButton';
 import { addDeck } from '../actions';
 
@@ -39,7 +39,7 @@ class AddDeck extends Component {
           <TextInput
             style={styles.input}
             placeholder='Title'
-            placeholderTextColor={purple}
+            placeholderTextColor={gray}
             onChangeText={this.handleOnChange}
             value={title}
           />
@@ -68,10 +68,12 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 32,
+    color: lightPurp,
+    fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
-    borderColor: gray,
+    borderColor: lightPurp,
     backgroundColor: white,
     paddingLeft: 10,
     paddingRight: 10,
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 40,
     marginBottom: 20,
+    color: lightPurp,
   },
 });
 

@@ -7,3 +7,4 @@ export const blue = '#4e4cb8';
 export const lightPurp = '#7c53c3';
 export const pink = '#b93fb3';
 export const green = '#00FF00';
+export const lighBlue = '#ADD8E6';

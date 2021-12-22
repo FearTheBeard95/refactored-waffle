@@ -1,15 +1,15 @@
 import React from 'react';
 import { TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
-import { purple, white } from '../utils/colors';
+import { lightPurp, purple, white } from '../utils/colors';
 
 export default function TextButton({ children, onPress, disabled }) {
   return (
     <TouchableOpacity
-      style={
+      style={[
         Platform.OS === 'android'
           ? styles.androidSubmitBtn
-          : styles.iosSubmitBtn
-      }
+          : styles.iosSubmitBtn,
+      ]}
       onPress={onPress}
       disabled={disabled}
     >
@@ -20,7 +20,7 @@ export default function TextButton({ children, onPress, disabled }) {
 
 const styles = StyleSheet.create({
   iosSubmitBtn: {
-    backgroundColor: purple,
+    backgroundColor: lightPurp,
     padding: 10,
     borderRadius: 7,
     height: 45,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   androidSubmitBtn: {
-    backgroundColor: purple,
+    backgroundColor: lightPurp,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,

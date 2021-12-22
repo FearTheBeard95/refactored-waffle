@@ -7,7 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, green, purple, white } from '../utils/colors';
+import {
+  gray,
+  green,
+  lighBlue,
+  lightPurp,
+  purple,
+  white,
+} from '../utils/colors';
 
 class DeckInfo extends Component {
   state = {
@@ -68,19 +75,18 @@ const styles = StyleSheet.create({
     flexBasis: 120,
     minHeight: 120,
     borderWidth: 1,
-    borderColor: '#aaa',
-    backgroundColor: green,
+    borderColor: lighBlue,
+    backgroundColor: lighBlue,
     borderRadius: 5,
     marginBottom: 10,
-    color: white,
   },
   deckText: {
     fontSize: 28,
-    color: purple,
+    color: white,
   },
   cardText: {
     fontSize: 18,
-    color: gray,
+    color: lightPurp,
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, purple, white } from '../utils/colors';
+import { gray, lightPurp, purple, white } from '../utils/colors';
 import TextButton from './TextButton';
 import { addCard } from '../actions';
 
@@ -43,10 +43,13 @@ class AddCard extends Component {
       <View style={styles.container}>
         <View style={{ height: 60 }} />
         <View style={styles.block}>
+          <Text style={styles.title}>Add new card</Text>
+        </View>
+        <View style={styles.block}>
           <TextInput
             style={styles.input}
             placeholder='Question'
-            placeholderTextColor={purple}
+            placeholderTextColor={gray}
             onChangeText={this.onChangeQuestion}
           />
         </View>
@@ -54,7 +57,7 @@ class AddCard extends Component {
           <TextInput
             style={styles.input}
             placeholder='Answer'
-            placeholderTextColor={purple}
+            placeholderTextColor={gray}
             onChangeText={this.onChangeAnswer}
           />
         </View>
@@ -82,10 +85,12 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 32,
+    color: lightPurp,
+    fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
-    borderColor: gray,
+    borderColor: lightPurp,
     backgroundColor: white,
     paddingLeft: 10,
     paddingRight: 10,
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 40,
     marginBottom: 20,
+    color: lightPurp,
   },
 });
 

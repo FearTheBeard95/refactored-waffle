@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { gray, white } from '../utils/colors';
+import { gray, lighBlue, lightPurp, white } from '../utils/colors';
 import TextButton from './TextButton';
 import ViewPage from '@react-native-community/viewpager';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
@@ -201,11 +201,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     textAlign: 'center',
+    color: white,
+    fontWeight: 'bold',
   },
   questionContainer: {
     borderWidth: 1,
-    borderColor: gray,
-    backgroundColor: white,
+    borderColor: lighBlue,
+    backgroundColor: lighBlue,
     borderRadius: 5,
     paddingTop: 20,
     paddingBottom: 20,
@@ -220,18 +222,23 @@ const styles = StyleSheet.create({
   questionText: {
     textAlign: 'center',
     fontSize: 20,
+    color: lightPurp,
   },
   ResultTextXLarge: {
     textAlign: 'center',
     fontSize: 100,
+    color: lightPurp,
+    fontWeight: 'bold',
   },
   ResultTextLarge: {
     textAlign: 'center',
     fontSize: 60,
+    color: white,
   },
   ResultTextSmall: {
     textAlign: 'center',
     fontSize: 30,
+    color: white,
   },
 });
 
