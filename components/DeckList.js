@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Animated,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { handleReceiveDecks } from '../actions';
@@ -19,30 +20,21 @@ class DeckList extends Component {
     setLocalNotification();
   }
   render() {
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <Text style={styles.title}>Mobile flash cards</Text>
-        <View
-          style={styles.separator}
-          lightColor='#eee'
-          darkColor='rgba(255,255,255,0.1)'
-        />
-        {Object.keys(decks).map((id) => {
-          return (
-            <TouchableOpacity
-              key={id}
-              onPress={() =>
-                this.props.navigation.navigate('Deck', {
-                  id,
-                })
-              }
-            >
-              <DeckInfo id={id} key={id} />
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+        <ScrollView style={styles.container}>
+          <View
+            style={styles.separator}
+            lightColor='#eee'
+            darkColor='rgba(255,255,255,0.1)'
+          />
+          {Object.keys(decks).map((id) => {
+            return <DeckInfo id={id} key={id} navigation={navigation} />;
+          })}
+        </ScrollView>
+      </View>
     );
   }
 }

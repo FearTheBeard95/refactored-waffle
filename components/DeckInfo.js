@@ -1,23 +1,62 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
-import { gray, purple, white } from '../utils/colors';
+import { gray, green, purple, white } from '../utils/colors';
 
 class DeckInfo extends Component {
+  state = {
+    bounceValue: new Animated.Value(1),
+  };
+  handleDeckClick = (id) => {
+    const { bounceValue } = this.state;
+    Animated.sequence([
+      Animated.timing(bounceValue, {
+        duration: 100,
+        toValue: 1.04,
+        useNativeDriver: true,
+      }),
+      Animated.spring(bounceValue, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: true,
+      }),
+    ]).start(() =>
+      this.props.navigation.navigate('Deck', {
+        id,
+      })
+    );
+  };
   render() {
-    const { deck } = this.props;
+    const { deck, navigation } = this.props;
+    const { bounceValue } = this.state;
+    const disbaled = navigation === undefined ? true : false;
     if (deck === undefined) {
       return <View style={styles.deckContainer} />;
     }
     return (
-      <View style={styles.deckContainer}>
-        <View>
-          <Text style={styles.deckText}>{deck.title}</Text>
-        </View>
-        <View>
-          <Text style={styles.cardText}>{deck.questions.length}</Text>
-        </View>
-      </View>
+      <Animated.View style={{ transform: [{ scale: bounceValue }] }}>
+        <TouchableOpacity
+          onPress={() => this.handleDeckClick(deck.title)}
+          disabled={disbaled}
+        >
+          <View style={styles.deckContainer}>
+            <View>
+              <Text style={styles.deckText}>{deck.title}</Text>
+            </View>
+            <View>
+              <Text style={styles.cardText}>
+                {deck.questions.length} Flash card(s)
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 }
@@ -30,9 +69,10 @@ const styles = StyleSheet.create({
     minHeight: 120,
     borderWidth: 1,
     borderColor: '#aaa',
-    backgroundColor: white,
+    backgroundColor: green,
     borderRadius: 5,
     marginBottom: 10,
+    color: white,
   },
   deckText: {
     fontSize: 28,
